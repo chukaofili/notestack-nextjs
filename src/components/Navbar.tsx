@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, LogOut, Plus } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { signOut } from "@/lib/auth-client";
 
 interface NavbarProps {
