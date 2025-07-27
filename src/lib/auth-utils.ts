@@ -8,11 +8,13 @@ export const checkAuth = async ({ api = false }: { api?: boolean }) => {
     headers: await headers(),
   });
 
-  if (!session && !api) {
-    redirect("/auth/signin");
+  if (!session) {
+    if (api) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    } else {
+      redirect("/auth/signin");
+    }
   }
 
-  if (!session && api) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  return session;
 };
