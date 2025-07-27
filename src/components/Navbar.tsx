@@ -42,13 +42,6 @@ export function Navbar({ user }: NavbarProps) {
 
         {user ? (
           <div className="flex items-center space-x-4">
-            <Link href="/notes/new">
-              <Button variant="outline" size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                New Note
-              </Button>
-            </Link>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm">
