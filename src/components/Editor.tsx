@@ -27,10 +27,12 @@ export function Editor({ note, isNew = false }: EditorProps) {
   const [title, setTitle] = useState(note?.title || "");
   const [content, setContent] = useState(note?.content || "");
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
   const saveNote = useCallback(async () => {
     if (!title.trim()) return;
+    if (isDeleting) return;
 
     setIsSaving(true);
     try {
@@ -66,6 +68,7 @@ export function Editor({ note, isNew = false }: EditorProps) {
     }
 
     try {
+      setIsDeleting(true);
       const response = await fetch(`/api/notes/${note.id}`, {
         method: "DELETE",
       });
@@ -74,6 +77,7 @@ export function Editor({ note, isNew = false }: EditorProps) {
         router.push("/dashboard");
       }
     } catch (error) {
+      setIsDeleting(false);
       console.error("Delete error:", error);
     }
   };
@@ -84,7 +88,7 @@ export function Editor({ note, isNew = false }: EditorProps) {
 
     const timeoutId = setTimeout(saveNote, 2000);
     return () => clearTimeout(timeoutId);
-  }, [title, content, saveNote]);
+  }, [title, content, saveNote, isDeleting]);
 
   return (
     <div className="container max-w-4xl mx-auto p-6">
