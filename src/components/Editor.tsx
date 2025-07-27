@@ -60,7 +60,7 @@ export function Editor({ note, isNew = false }: EditorProps) {
     } finally {
       setIsSaving(false);
     }
-  }, [title, content, isNew, note?.id, router]);
+  }, [title, isDeleting, isNew, note?.id, content, router]);
 
   const deleteNote = async () => {
     if (!note?.id || !confirm("Are you sure you want to delete this note?")) {
